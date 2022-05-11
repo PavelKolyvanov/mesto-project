@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Место</title>
+</head>
+
+<body class="page">
+  <div class="page__container">
+
+    <header class="header">
+      <div class="header__logo"></div>
+    </header>
+
+    <main>
+      <section class="profile">
+        <img src="./images/avatar.jpg" alt="аватар" class="profile__avatar">
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button aria-label="Edit" type="submit" class="profile__edit-btn"></button>
+          <p class="profile__about">Исследователь океана</p>
+        </div>
+        <button aria-label="Add" type="submit" class="profile__add-btn"></button>
+      </section>
+
+      <section class="elements" aria-label="Карточки мест">
+        <article class="elements__item">
+          <img src="./images/krch.jpg" alt="карачаевск" class="elements__pic">
+          <div class="elements__info">
+            <h2 class="elements__title">Карачаевск</h2>
+            <button aria-label="Like" type="submit" class="elements__like"></button>
+          </div>
+        </article>
+        <article class="elements__item">
+          <img src="./images/elbrs.jpg" alt="гора эльбрус" class="elements__pic">
+          <div class="elements__info">
+            <h2 class="elements__title">Гора Эльбрус</h2>
+            <button aria-label="Like" type="submit" class="elements__like"></button>
+          </div>
+        </article>
+        <article class="elements__item">
+          <img src="./images/dmb.jpg" alt="домбай" class="elements__pic">
+          <div class="elements__info">
+            <h2 class="elements__title">Домбай</h2>
+            <button aria-label="Like" type="submit" class="elements__like"></button>
+          </div>
+        </article>
+        <article class="elements__item">
+          <img src="./images/elbrs.jpg" alt="гора эльбрус" class="elements__pic">
+          <div class="elements__info">
+            <h2 class="elements__title">Гора Эльбрус</h2>
+            <button aria-label="Like" type="submit" class="elements__like"></button>
+          </div>
+        </article>
+        <article class="elements__item">
+          <img src="./images/dmb.jpg" alt="домбай" class="elements__pic">
+          <div class="elements__info">
+            <h2 class="elements__title">Домбай</h2>
+            <button aria-label="Like" type="submit" class="elements__like"></button>
+          </div>
+        </article>
+        <article class="elements__item">
+          <img src="./images/krch.jpg" alt="карачаевск" class="elements__pic">
+          <div class="elements__info">
+            <h2 class="elements__title">Карачаево-Черкесская Республика</h2>
+            <button aria-label="Like" type="submit" class="elements__like"></button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__copyright">© 2022 Mesto Russia</p>
+    </footer>
+
+    <div class="popup">
+      <div class="popup__container">
+        <button aria-label="Close" type="submit" class="popup__close"></button>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="popup__form">
+          <input name="name" type="text" placeholder="Имя" class="popup__input">
+          <input name="about" type="text" placeholder="О себе" class="popup__input">
+          <button aria-label="Save" type="submit" class="popup__save-btn">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
