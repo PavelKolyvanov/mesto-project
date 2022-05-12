@@ -3,7 +3,7 @@
   height: 24px;
   cursor: pointer;
   margin: 15px 0 0 18px;
-  background: no-repeat center/10px 10px url('../../../images/edit-btn.png');
+  background: no-repeat center/10px 10px url('../../../images/edit-btn.svg');
   border: 1px solid rgba(255, 255, 255, 1);
 }
 .profile__edit-btn:hover {

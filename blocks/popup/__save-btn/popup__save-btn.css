@@ -8,6 +8,7 @@
   line-height: 21.78px;
   font-weight: 400;
   color: white;
+  border-radius: 2px;
 }
 .popup__save-btn:hover {
   opacity: 0.8;
