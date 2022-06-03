@@ -1,0 +1,10 @@
+.popup__title-pic {
+  max-width: 100%;
+  word-break: break-all;
+  font-size: 12px;
+  line-height: 14.52px;
+  font-weight: 400;
+  margin: 0px;
+  position: absolute;
+  bottom: -22px;
+}

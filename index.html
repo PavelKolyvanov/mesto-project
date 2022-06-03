@@ -26,8 +26,10 @@
       </section>
 
       <section class="elements" aria-label="Карточки мест">
+        <!--
         <div class="elements__item">
           <img src="./images/krch.jpg" alt="карачаевск" class="elements__pic">
+          <button aria-label="Trash" type="button" class="elements__trash"></button>
           <div class="elements__info">
             <h2 class="elements__title">Карачаевск</h2>
             <button aria-label="Like" type="button" class="elements__like"></button>
@@ -35,6 +37,7 @@
         </div>
         <div class="elements__item">
           <img src="./images/elbrs.jpg" alt="гора эльбрус" class="elements__pic">
+          <button aria-label="Trash" type="button" class="elements__trash"></button>
           <div class="elements__info">
             <h2 class="elements__title">Гора Эльбрус</h2>
             <button aria-label="Like" type="button" class="elements__like"></button>
@@ -42,6 +45,7 @@
         </div>
         <div class="elements__item">
           <img src="./images/dmb.jpg" alt="домбай" class="elements__pic">
+          <button aria-label="Trash" type="button" class="elements__trash"></button>
           <div class="elements__info">
             <h2 class="elements__title">Домбай</h2>
             <button aria-label="Like" type="button" class="elements__like"></button>
@@ -49,6 +53,7 @@
         </div>
         <div class="elements__item">
           <img src="./images/elbrs.jpg" alt="гора эльбрус" class="elements__pic">
+          <button aria-label="Trash" type="button" class="elements__trash"></button>
           <div class="elements__info">
             <h2 class="elements__title">Гора Эльбрус</h2>
             <button aria-label="Like" type="button" class="elements__like"></button>
@@ -56,6 +61,7 @@
         </div>
         <div class="elements__item">
           <img src="./images/dmb.jpg" alt="домбай" class="elements__pic">
+          <button aria-label="Trash" type="button" class="elements__trash"></button>
           <div class="elements__info">
             <h2 class="elements__title">Домбай</h2>
             <button aria-label="Like" type="button" class="elements__like"></button>
@@ -63,11 +69,13 @@
         </div>
         <div class="elements__item">
           <img src="./images/krch.jpg" alt="карачаевск" class="elements__pic">
+          <button aria-label="Trash" type="button" class="elements__trash"></button>
           <div class="elements__info">
             <h2 class="elements__title">Карачаево-Черкесская Республика</h2>
             <button aria-label="Like" type="button" class="elements__like"></button>
           </div>
         </div>
+      -->
       </section>
     </main>
 
@@ -75,11 +83,11 @@
       <p class="footer__copyright">© 2022 Mesto Russia</p>
     </footer>
 
-    <div class="popup_opened">
+    <div class="popup popup_type_edit">
       <div class="popup__container">
-        <button aria-label="Close" type="button" class="popup__close"></button>
+        <button aria-label="Close" type="button" class="popup__close popup__close_edit"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form class="popup__form" name="formEditProfile">
+        <form class="popup__form popup__form_edit" name="formEditProfile">
           <input name="name" type="text" placeholder="Имя" class="popup__input popup__input_form_name">
           <input name="about" type="text" placeholder="О себе" class="popup__input popup__input_form_about">
           <button aria-label="Save" type="submit" class="popup__save-btn">Сохранить</button>
@@ -87,6 +95,41 @@
       </div>
     </div>
 
+    <div class="popup popup_type_add">
+      <div class="popup__container">
+        <button aria-label="Close" type="button" class="popup__close popup__close_add"></button>
+        <h3 class="popup__title">Новое место</h3>
+        <form class="popup__form popup__form_add" name="formAddPlace">
+          <input name="name" type="text" placeholder="Название" class="popup__input popup__input_form_name-pic">
+          <input name="link" type="text" placeholder="Ссылка на картинку" class="popup__input popup__input_form_link">
+          <button aria-label="Create" type="submit" class="popup__save-btn">Создать</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_type_pic">
+      <div class="popup__container-pic">
+        <button aria-label="Close" type="button" class="popup__close popup__close_pic"></button>
+        <h3 class="popup__title-pic"></h3>
+        <img class="popup__pic">
+      </div>
+    </div>
+
   </div>
+
+<template id="elements-template">
+
+  <div class="elements__item">
+    <img class="elements__pic">
+    <button aria-label="Trash" type="button" class="elements__trash"></button>
+    <div class="elements__info">
+      <h2 class="elements__title"></h2>
+      <button aria-label="Like" type="button" class="elements__like"></button>
+    </div>
+  </div>
+
+</template>
+
+<script src="./scripts/index.js"></script>
 </body>
 </html>
