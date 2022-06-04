@@ -7,6 +7,8 @@ const btnEditClose = popupEdit.querySelector('.popup__close_edit');
 const btnAddClose = popupAdd.querySelector('.popup__close_add');
 
 const popupPic = document.querySelector('.popup_type_pic');
+const picZoom = popupPic.querySelector('.popup__pic');
+const titlePicZoom = popupPic.querySelector('.popup__title-pic')
 const btnPicClose = popupPic.querySelector('.popup__close_pic');
 
 const popupFormEdit = popupEdit.querySelector('.popup__form_edit');
@@ -97,6 +99,8 @@ function formAddCard(add) {
 popupFormAdd.addEventListener('submit', formAddCard);
 //закрытие
 function addClose() {
+  popupAddLink.value = '';
+  popupAddName.value = '';
   popupClose(popupAdd);
 }
 
@@ -108,9 +112,12 @@ function addCard(link, name) {
   const cardElement = cardTemplate.querySelector('.elements__item').cloneNode(true);
   const btnDelete = cardElement.querySelector('.elements__trash');
   const btnLike = cardElement.querySelector('.elements__like');
+  const cardPic = cardElement.querySelector('.elements__pic');
+  const cardTxt = cardElement.querySelector('.elements__title');
 
-    cardElement.querySelector('.elements__pic').src = link;
-    cardElement.querySelector('.elements__title').textContent = name;
+    cardPic.src = link;
+    cardPic.alt = name;
+    cardTxt.textContent = name;
 
       function cardDelete() {
         cardElement.remove();
@@ -122,12 +129,10 @@ function addCard(link, name) {
       }
       btnLike.addEventListener('click', cardLike);
 
-  const cardPic = cardElement.querySelector('.elements__pic');
-  const cardTxt = cardElement.querySelector('.elements__title');
-
       function zoomedPic() {
-        popupPic.querySelector('.popup__pic').src = cardPic.src;
-        popupPic.querySelector('.popup__title-pic').textContent = cardTxt.textContent;
+        picZoom.src = link;
+        picZoom.alt = name;
+        titlePicZoom.textContent = name;
 
         popupOpen(popupPic);
       }
