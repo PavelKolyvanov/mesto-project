@@ -1,10 +1,9 @@
-import {cardTemplate, picZoom, titlePicZoom, popupPic, cardContainer} from '../index.js';
-import {popupOpen} from './modal.js';
+import {cardTemplate, picZoom, titlePicZoom, popupPic} from '../index.js';
+import {openPopup} from './modal.js';
 
 export {addCard, initialCards};
 
 //массив карточек
-
 const initialCards = [
   {
     name: 'Архыз',
@@ -44,22 +43,22 @@ function addCard(link, name) {
     cardPic.alt = name;
     cardTxt.textContent = name;
 
-      function cardDelete() {
+      function deleteCard() {
         cardElement.remove();
       }
-      btnDelete.addEventListener('click', cardDelete);
+      btnDelete.addEventListener('click', deleteCard);
 
-      function cardLike() {
+      function likeCard() {
         btnLike.classList.toggle('elements__like_active');
       }
-      btnLike.addEventListener('click', cardLike);
+      btnLike.addEventListener('click', likeCard);
 
       function zoomedPic() {
         picZoom.src = link;
         picZoom.alt = name;
         titlePicZoom.textContent = name;
 
-        popupOpen(popupPic);
+        openPopup(popupPic);
       }
       cardPic.addEventListener('click', zoomedPic);
 

@@ -1,9 +1,9 @@
-export {popups, popupEdit, popupAdd, popupPic, picZoom, titlePicZoom, profName, profAbout, popupProfName, popupProfAbout, popupAddName, popupAddLink, cardTemplate, cardContainer};
+export {popups, popupEdit, popupAdd, popupPic, picZoom, titlePicZoom, profName, profAbout, popupProfName, popupProfAbout, popupAddName, popupAddLink, popupAddBtn, cardTemplate, cardContainer};
 
-import {popupClose, addOpen, editPopupOpen, formEditProf, formAddCard} from './components/modal.js';
+import {closePopup, openAdd, openEditPopup, formEditProf, formAddCard} from './components/modal.js';
 import {enableValidation} from './components/validate.js';
 import {addCard, initialCards} from './components/card.js';
-import './pages/index.css'; //импорт главного файла стилей
+import './pages/index.css';
 
 const popups = document.querySelectorAll('.popup');
 
@@ -25,15 +25,16 @@ const popupProfAbout = popupEdit.querySelector('.popup__input_form_about');
 const popupFormAdd = popupAdd.querySelector('.popup__form_add');
 const popupAddName = popupAdd.querySelector('.popup__input_form_name-pic');
 const popupAddLink = popupAdd.querySelector('.popup__input_form_link');
+const popupAddBtn = popupAdd.querySelector('.popup__save-btn');
 
 const cardTemplate = document.querySelector('#elements-template').content;
 const cardContainer = document.querySelector('.elements');
 
 //открытие попапа добавления карточки
-btnAdd.addEventListener('click', addOpen);
+btnAdd.addEventListener('click', openAdd);
 
 //открытие попапа редактирования профиля
-btnEdit.addEventListener('click', editPopupOpen);
+btnEdit.addEventListener('click', openEditPopup);
 
 //сохранение профиля
 popupFormEdit.addEventListener('submit', formEditProf);
@@ -51,21 +52,14 @@ enableValidation({
   errorClass: 'popup__input-error_active'
 });
 
-//закрытие попапов по Esc
-document.addEventListener('keydown', function(evt) {
-  const popupOpened = document.querySelector('.popup_opened')
-  if (evt.key === "Escape") {
-    popupClose(popupOpened);
-  }
-});
 //закрытие попапов по клику оверлей и крестику
 popups.forEach(function (popup){
   popup.addEventListener('mousedown', function (evt) {
     if (evt.target.classList.contains('popup_opened')) {
-      popupClose(popup);
+      closePopup(popup);
     }
     if (evt.target.classList.contains('popup__close')) {
-      popupClose(popup);
+      closePopup(popup);
     }
   })
 })
