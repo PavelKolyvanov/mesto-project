@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
+  <!--<link rel="stylesheet" href="./pages/index.css">-->
   <title>Место</title>
 </head>
 
@@ -16,7 +16,7 @@
 
     <main>
       <section class="profile">
-        <img src="./images/avatar.jpg" alt="аватар" class="profile__avatar">
+        <img src="<%=require('./images/avatar.jpg')%>" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button aria-label="Edit" type="button" class="profile__edit-btn"></button>
@@ -87,9 +87,14 @@
       <div class="popup__container">
         <button aria-label="Close" type="button" class="popup__close popup__close_edit"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form class="popup__form popup__form_edit" name="formEditProfile">
-          <input name="name" type="text" placeholder="Имя" class="popup__input popup__input_form_name">
-          <input name="about" type="text" placeholder="О себе" class="popup__input popup__input_form_about">
+        <form class="popup__form popup__form_edit" name="formEditProfile" novalidate>
+
+          <input name="name" type="text" placeholder="Имя" class="popup__input popup__input_form_name" id="input-name" minlength="2" maxlength="40" required>
+          <span class="popup__input-error input-name-error"></span>
+
+          <input name="about" type="text" placeholder="О себе" class="popup__input popup__input_form_about" id="input-about" minlength="2" maxlength="200" required>
+          <span class="popup__input-error input-about-error"></span>
+
           <button aria-label="Save" type="submit" class="popup__save-btn">Сохранить</button>
         </form>
       </div>
@@ -99,9 +104,13 @@
       <div class="popup__container">
         <button aria-label="Close" type="button" class="popup__close popup__close_add"></button>
         <h3 class="popup__title">Новое место</h3>
-        <form class="popup__form popup__form_add" name="formAddPlace">
-          <input name="name" type="text" placeholder="Название" class="popup__input popup__input_form_name-pic">
-          <input name="link" type="text" placeholder="Ссылка на картинку" class="popup__input popup__input_form_link">
+        <form class="popup__form popup__form_add" name="formAddPlace" novalidate>
+
+          <input name="name" type="text" placeholder="Название" class="popup__input popup__input_form_name-pic" id="input-name-pic" minlength="2" maxlength="30" required>
+          <span class="popup__input-error input-name-pic-error"></span>
+          <input name="link" type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_form_link" id="input-link" required>
+          <span class="popup__input-error input-link-error"></span>
+
           <button aria-label="Create" type="submit" class="popup__save-btn">Создать</button>
         </form>
       </div>
@@ -130,6 +139,10 @@
 
 </template>
 
-<script src="./scripts/index.js"></script>
+<!--<script type="module" src="./scripts/index.js"></script>
+<script type="module" src="./scripts/components/card.js"></script>
+<script type="module" src="./scripts/components/modal.js"></script>
+<script type="module" src="./scripts/components/utils.js"></script>
+<script type="module" src="./scripts/components/validate.js"></script>-->
 </body>
 </html>
