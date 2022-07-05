@@ -1,18 +1,14 @@
 
-export {openPopup, closePopup, openEditPopup, formEditProf, openAdd, formAddCard};
+export {closeByEsc, openEditPopup, openAvatarPopup, formEditProf, formAvatar, openAdd, formAddCard};
 
-import {popupEdit, popupAdd, profName, profAbout, popupProfName, popupProfAbout, popupAddName, popupAddLink, popupAddBtn, cardContainer} from '../index.js';
+import {popupEdit, popupAvatar, popupAdd, profName, profAbout, popupProfName, popupProfAbout, profAvatar,
+        popupAvatarLink, popupAddName, popupAddLink, popupEditBtn, popupAvatarBtn, popupAddBtn, cardContainer} from '../index.js';
 import {addCard} from './card.js';
+import {closePopup, openPopup} from './utils.js';
 
-//открытие и закрытие попапов
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closeByEsc);
-}
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeByEsc);
-}
+import {editUser, addCardPic, avatarPic} from '../api.js';
+
+
 //закрытие попапов по Esc
 function closeByEsc(evt) {
   if (evt.key === "Escape") {
@@ -29,15 +25,51 @@ function openEditPopup() {
   popupProfAbout.value = profAbout.textContent;
 }
 //сохранение
-function formEditProf(save) {
-  save.preventDefault();
-  profName.textContent = popupProfName.value;
-  profAbout.textContent = popupProfAbout.value;
+function formEditProf(edit) {
+  edit.preventDefault();
+  popupEditBtn.textContent = 'Сохранить...';
+  editUser({name: popupProfName.value,
+            about: popupProfAbout.value})
+    .then((dataFromServer)=> {
+      profName.textContent = popupProfName.value;
+      profAbout.textContent = popupProfAbout.value;
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   closeEditPopup();
 }
 //закрытие
 function closeEditPopup() {
   closePopup(popupEdit);
+}
+
+//попап редактирования аватара
+//открытие, заполнение
+function openAvatarPopup() {
+  if (popupAvatarLink.value === '') {
+    popupAvatarBtn.classList.add('popup__save-btn_inactive');
+    popupAvatarBtn.setAttribute('disabled', true);
+  };
+  openPopup(popupAvatar);
+}
+//сохранение
+function formAvatar(ava) {
+  ava.preventDefault();
+  popupAvatarBtn.textContent = 'Сохранить...';
+  avatarPic({avatar: popupAvatarLink.value})
+    .then((dataAvatar) => {
+      profAvatar.src = dataAvatar.avatar;
+      })
+    .catch((err) => {
+      console.log(err)
+    });
+  closeAvatarPopup();
+  }
+//закрытие
+function closeAvatarPopup() {
+  popupAvatarLink.value = '';
+  closePopup(popupAvatar);
 }
 
 //попап добавления карточки
@@ -52,7 +84,15 @@ function openAdd() {
 //заполнение и добавление
 function formAddCard(add) {
   add.preventDefault();
-  cardContainer.prepend(addCard(popupAddLink.value, popupAddName.value));
+  popupAddBtn.textContent = 'Создать...';
+  addCardPic({name: popupAddName.value,
+              link: popupAddLink.value})
+    .then((dataCard) => {
+      cardContainer.prepend(addCard(dataCard.link, dataCard.name, dataCard._id, true, 0, false));
+    })
+    .catch((err) => {
+      console.log(err)
+    });
   closeAdd();
 }
 //закрытие

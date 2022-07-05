@@ -100,6 +100,20 @@
       </div>
     </div>
 
+    <div class="popup popup_type_avatar">
+      <div class="popup__container">
+        <button aria-label="Close" type="button" class="popup__close popup__close_avatar"></button>
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form name="popupFormAvatar" class="popup__form popup__form_avatar" novalidate>
+
+          <input name="avatar-link" type="url" placeholder="Ссылка на картинку" id="input-link" class="popup__input popup__input_avatar_link" required>
+          <span class="popup__input-error input-link-error"></span>
+
+          <button aria-label="Save" type="submit" class="popup__save-btn">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
     <div class="popup popup_type_add">
       <div class="popup__container">
         <button aria-label="Close" type="button" class="popup__close popup__close_add"></button>
@@ -108,7 +122,7 @@
 
           <input name="name" type="text" placeholder="Название" class="popup__input popup__input_form_name-pic" id="input-name-pic" minlength="2" maxlength="30" required>
           <span class="popup__input-error input-name-pic-error"></span>
-          <input name="link" type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_form_link" id="input-link" required>
+          <input name="link" type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_add_link" id="input-link" required>
           <span class="popup__input-error input-link-error"></span>
 
           <button aria-label="Create" type="submit" class="popup__save-btn">Создать</button>
@@ -133,7 +147,10 @@
     <button aria-label="Trash" type="button" class="elements__trash"></button>
     <div class="elements__info">
       <h2 class="elements__title"></h2>
-      <button aria-label="Like" type="button" class="elements__like"></button>
+      <div class="elements__likes">
+        <button aria-label="Like" type="button" class="elements__like"></button>
+        <div class ="elements__like-counter">0</div>
+      </div>
     </div>
   </div>
 
