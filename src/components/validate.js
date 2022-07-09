@@ -1,4 +1,7 @@
-export {enableValidation, showInputError, hideInputError, checkInputValidity, hasInvalidInput, toggleButtonState, setEventListener};
+export {enableValidation,
+        showInputError, hideInputError,
+        checkInputValidity, hasInvalidInput,
+        toggleButtonState, setEventListener};
 
 const showInputError = (formPopup, inputPopup, settings, errorMessage) => {
   const errorPopup = formPopup.querySelector(`.${inputPopup.id}-error`);
@@ -26,7 +29,7 @@ const checkInputValidity = (formPopup, inputPopup, settings) => {
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputPopup) => {
-    return !inputPopup.validity.valid;
+    return !inputPopup.validity.valid || inputPopup.value === '';
   });
 };
 
@@ -57,6 +60,7 @@ const setEventListener = (formPopup, settings) => {
 const enableValidation = (settings) => {
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
 
+
   formList.forEach((formPopup) => {
     formPopup.addEventListener('submit', function(evt) {
       evt.preventDefault();
@@ -65,3 +69,19 @@ const enableValidation = (settings) => {
     setEventListener(formPopup, settings);
   });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

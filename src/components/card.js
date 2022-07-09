@@ -1,12 +1,10 @@
-import {cardTemplate, picZoom, titlePicZoom, popupPic} from '../index.js';
-import {openPopup} from './utils.js';
+import {cardTemplate, picZoom, titlePicZoom, popupPic, handleDeleteCard, handleLikeCard} from '../index.js';
+import {openPopup, closePopup} from './modal.js';
 
-export {addCard};
+export {addCard, deleteCard, likeCard};
 
-import {deleteCardPic, changeLikes} from '../api.js';
-
-//создание карточки
-function addCard(link, name, idCard, delIcon, likes, liked) {
+//создание карточк
+function addCard(dataCard, idCard, likes, liked, userId, handleDeleteCard, handleLikeCard) {
   const cardElement = cardTemplate.querySelector('.elements__item').cloneNode(true);
   const btnDelete = cardElement.querySelector('.elements__trash');
   const btnLike = cardElement.querySelector('.elements__like');
@@ -14,50 +12,69 @@ function addCard(link, name, idCard, delIcon, likes, liked) {
   const cardTxt = cardElement.querySelector('.elements__title');
   const likesCount = cardElement.querySelector('.elements__like-counter');
 
-    cardPic.src = link;
-    cardPic.alt = name;
-    cardTxt.textContent = name;
+    cardPic.src = dataCard.link;
+    cardPic.alt = dataCard.name;
+    cardTxt.textContent = dataCard.name;
     likesCount.textContent = likes.toString();
 
-    function deleteCard(evt) {
-      deleteCardPic(idCard)
-        .then(() => {
-          cardElement.remove()
-        })
-        .catch((err) => {
-          console.log(err)
-        });
-    }
-    if (delIcon) {
-      btnDelete.addEventListener('click', deleteCard);
-    } else {
-      btnDelete.classList.add('elements__trash_hide');
-      }
+  if (dataCard.owner._id !== userId) { 
+      btnDelete.remove();
+  }
 
-      function likeCard() {
-        changeLikes(idCard, !btnLike.classList.contains('elements__like_active'))
-        .then((dataCard) => {
-          likesCount.textContent = dataCard.likes.length.toString();
-          btnLike.classList.toggle('elements__like_active');
-        })
-        .catch((err) => {
-          console.log(err)
-        });
-      }
-      btnLike.addEventListener('click', likeCard);
+  btnDelete.addEventListener('click', () => handleDeleteCard(cardElement, idCard));
 
+  btnLike.addEventListener('click', () => handleLikeCard(idCard, cardElement, userId, !btnLike.classList.contains('elements__like_active')));
+  
+  dataCard.likes.forEach((owner)=>{
+       if (owner._id === userId) {
+       liked=true;
+       }
+     })
       if (liked) {
         btnLike.classList.add('elements__like_active');
       }
 
-      function zoomedPic() {
-        picZoom.src = link;
-        picZoom.alt = name;
-        titlePicZoom.textContent = name;
-
-        openPopup(popupPic);
-      }
-      cardPic.addEventListener('click', zoomedPic);
+      cardPic.addEventListener('click', () => zoomedPic(dataCard));
 
   return cardElement;
+}
+
+//удаление карточки
+function deleteCard(cardElement) {
+  cardElement.remove();
+}
+//лайк карточки
+function ownerLike(dataLikes, userId) {
+  let liked = false;
+  dataLikes.forEach((owner)=>{
+    if (owner._id === userId) {
+      liked = true;
+    }
+  })
+  return liked;
+}
+
+function likeCard(dataCard, cardElement, userId) {
+  const btnLike = cardElement.querySelector('.elements__like');
+  const likesCount = cardElement.querySelector('.elements__like-counter');
+
+  likesCount.textContent = dataCard.likes.length.toString();
+  console.log(userId);
+  console.log(dataCard.likes);
+  if (ownerLike(dataCard.likes, userId)) {
+    btnLike.classList.add('elements__like_active');
+    //console.log('add');
+  } else {
+    btnLike.classList.remove('elements__like_active');
+    //console.log('remove');
+  }
+}
+
+//увеличение карточки
+function zoomedPic(dataCard) {
+  picZoom.src = dataCard.link;
+  picZoom.alt = dataCard.name;
+  titlePicZoom.textContent = dataCard.name;
+
+  openPopup(popupPic);
 }

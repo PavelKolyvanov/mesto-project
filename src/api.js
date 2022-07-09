@@ -37,6 +37,10 @@ export function getMassiveCard(data) {
       .then(onResponce)
 }
 
+export function getUsernCards() {
+  return Promise.all([getUser(), getMassiveCard()])
+}
+
 export function addCardPic(data) {
   return fetch(`${config.url}/cards`, 
   {
@@ -59,9 +63,9 @@ export function deleteCardPic(idCard) {
     .then(onResponce)
 }
 
-export function changeLikes(idCard, add) {
+export function changeLikes(idCard, unliked) {
   return fetch(`${config.url}/cards/likes/${idCard}`, {
-    method: (add ? "PUT" : "DELETE"),
+    method: (unliked ? "PUT" : "DELETE"),
     headers: config.headers
   })
   .then(onResponce)

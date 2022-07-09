@@ -1,16 +1,17 @@
 export {popups, popupEdit, popupAvatar, popupAdd, popupPic, picZoom,
         titlePicZoom, profName, profAbout, popupProfName,
         popupProfAbout, profAvatar, popupAvatarLink, popupAddName, popupAddLink,
-        popupEditBtn, popupAvatarBtn, popupAddBtn, cardTemplate, cardContainer};
+        popupEditBtn, popupAvatarBtn, popupAddBtn, cardTemplate, cardContainer,
+        handleDeleteCard, handleLikeCard, userId};
 
-import {openAdd, openEditPopup, openAvatarPopup,
-        formAvatar, formEditProf, formAddCard} from './components/modal.js';
-import {closePopup} from './components/utils.js';
-import {enableValidation} from './components/validate.js';
-import {addCard} from './components/card.js';
 import './pages/index.css';
-
-import {getUser, getMassiveCard} from './api.js'
+import {openPopup, closePopup} from './components/modal.js';
+import {enableValidation,
+        showInputError, hideInputError,
+        checkInputValidity, hasInvalidInput,
+        toggleButtonState, setEventListener} from './components/validate.js';
+import {addCard, deleteCard, likeCard} from './components/card.js';
+import {getUsernCards, deleteCardPic, changeLikes, editUser, avatarPic, addCardPic} from './api.js'
 
 const popups = document.querySelectorAll('.popup');
 
@@ -63,16 +64,6 @@ popupFormAvatar.addEventListener('submit', formAvatar);
 //сохранение/публикация карточки
 popupFormAdd.addEventListener('submit', formAddCard);
 
-//валидация
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-btn',
-  inactiveButtonClass: 'popup__save-btn_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-});
-
 //закрытие попапов по клику оверлей и крестику
 popups.forEach(function (popup){
   popup.addEventListener('mousedown', function (evt) {
@@ -85,30 +76,138 @@ popups.forEach(function (popup){
   })
 })
 
-let userId;
-getUser()
-  .then((data) => {
-    profName.textContent = data.name
-    profAbout.textContent = data.about
-    profAvatar.src = data.avatar
-    userId = data._id
-  })
-  .then(getMassiveCard)
-  .then((cards) => {
+//получаем информ о User и массив карточек
+let userId
+getUsernCards()
+  .then(([user, cards]) => {
+    profName.textContent = user.name
+    profAbout.textContent = user.about
+    profAvatar.src = user.avatar
+    userId = user._id
+
+
     cards.forEach((card) => {
-      const delIcon = (card.owner._id == userId);
-
       let liked = false;
-      card.likes.forEach((user)=>{
-        if (user._id == userId) {
-          liked=true;
-        }
-      })
-
-    cardContainer.append(addCard(card.link, card.name, card._id, delIcon, card.likes.length, liked));
+      cardContainer.append(addCard(card, card._id, card.likes.length, liked, userId, handleDeleteCard, handleLikeCard)); 
+    })
   })
-})
   .catch((err) => {
     console.log(err)
   });
 
+function handleDeleteCard(cardElement, idCard) {
+  deleteCardPic(idCard)
+    .then(() => {
+      deleteCard(cardElement)
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+}
+
+function handleLikeCard(idCard, cardElement, userId, unliked) {
+  changeLikes(idCard, unliked)
+    .then((dataCard) => {
+      likeCard(dataCard, cardElement, userId)
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+}
+
+//попап редактирования профиля
+//открытие, заполнение
+function openEditPopup() {
+  openPopup(popupEdit);
+  popupProfName.value = profName.textContent;
+  popupProfAbout.value = profAbout.textContent;
+}
+//сохранение
+function formEditProf(edit) {
+  edit.preventDefault();
+  popupEditBtn.textContent = 'Сохранить...';
+  editUser({name: popupProfName.value,
+            about: popupProfAbout.value})
+    .then((dataFromServer)=> {
+      profName.textContent = popupProfName.value;
+      profAbout.textContent = popupProfAbout.value;
+      closeEditPopup();
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally(() => {
+      popupEditBtn.textContent = 'Сохранить';   
+      closeEditPopup();   
+    })
+}
+//закрытие
+function closeEditPopup() {
+  closePopup(popupEdit);
+}
+
+//попап редактирования аватара
+//открытие, заполнение
+function openAvatarPopup() {  
+  openPopup(popupAvatar);
+}
+//сохранение
+function formAvatar(ava) {
+  ava.preventDefault();
+  popupAvatarBtn.textContent = 'Сохранить...';
+  avatarPic({avatar: popupAvatarLink.value})
+    .then((dataAvatar) => {
+      profAvatar.src = dataAvatar.avatar;
+      closeAvatarPopup();
+      })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally(() => {
+      popupAvatarBtn.textContent = 'Сохранить';
+    })
+  }
+//закрытие
+function closeAvatarPopup() {
+  popupAvatarLink.value = '';
+  closePopup(popupAvatar);
+}
+
+//попап добавления карточки
+//открытие
+function openAdd() {s
+  openPopup(popupAdd);
+}
+//заполнение и добавление
+function formAddCard(add) {
+  add.preventDefault();
+  popupAddBtn.textContent = 'Создать...';
+  addCardPic({name: popupAddName.value,
+              link: popupAddLink.value})
+    .then((dataCard) => {
+      cardContainer.prepend(addCard(dataCard, dataCard._id, 0, false, userId, handleDeleteCard, handleLikeCard));
+      closeAdd();
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally(() => {
+      popupAddBtn.textContent = 'Сохранить';
+    })
+}
+//закрытие
+function closeAdd() {
+  popupAddLink.value = '';
+  popupAddName.value = '';
+  closePopup(popupAdd);
+}
+
+//валидация
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-btn',
+  inactiveButtonClass: 'popup__save-btn_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+});
