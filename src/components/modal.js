@@ -1,6 +1,6 @@
 
 export {openPopup, closePopup, closeByEsc};
-import {enableValidation} from './validate.js';
+import {enableValidation, toggleButtonState, disableSubmit} from './validate.js';
 //закрытие попапов по Esc
 function closeByEsc(evt) {
   if (evt.key === "Escape") {
@@ -12,6 +12,8 @@ function closeByEsc(evt) {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEsc);
+  disableSubmit(popup);
+  
 }
 function closePopup(popup) {
   popup.classList.remove('popup_opened');

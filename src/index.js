@@ -7,7 +7,7 @@ export {popups, popupEdit, popupAvatar, popupAdd, popupPic, picZoom,
 import './pages/index.css';
 import {openPopup, closePopup} from './components/modal.js';
 import {enableValidation,
-        showInputError, hideInputError,
+        showError, hideError,
         checkInputValidity, hasInvalidInput,
         toggleButtonState, setEventListener} from './components/validate.js';
 import {addCard, deleteCard, likeCard} from './components/card.js';
@@ -45,6 +45,16 @@ const popupAddBtn = popupAdd.querySelector('.popup__save-btn');
 
 const cardTemplate = document.querySelector('#elements-template').content;
 const cardContainer = document.querySelector('.elements');
+
+//валидация
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-btn',
+  inactiveButtonClass: 'popup__save-btn_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+});
 
 //открытие попапа добавления карточки
 btnAdd.addEventListener('click', openAdd);
@@ -138,7 +148,6 @@ function formEditProf(edit) {
     })
     .finally(() => {
       popupEditBtn.textContent = 'Сохранить';   
-      closeEditPopup();   
     })
 }
 //закрытие
@@ -175,7 +184,7 @@ function closeAvatarPopup() {
 
 //попап добавления карточки
 //открытие
-function openAdd() {s
+function openAdd() {
   openPopup(popupAdd);
 }
 //заполнение и добавление
@@ -201,13 +210,3 @@ function closeAdd() {
   popupAddName.value = '';
   closePopup(popupAdd);
 }
-
-//валидация
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-btn',
-  inactiveButtonClass: 'popup__save-btn_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-});
