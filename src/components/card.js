@@ -1,4 +1,4 @@
-import {cardTemplate, picZoom, titlePicZoom, popupPic, handleDeleteCard, handleLikeCard} from '../index.js';
+import {cardTemplate, zoomPic, titlePicZoom, popupPic, handleDeleteCard, handleLikeCard} from '../index.js';
 import {openPopup, closePopup} from './modal.js';
 
 export {addCard, deleteCard, likeCard};
@@ -24,7 +24,7 @@ function addCard(dataCard, idCard, likes, liked, userId, handleDeleteCard, handl
   btnDelete.addEventListener('click', () => handleDeleteCard(cardElement, idCard));
 
   btnLike.addEventListener('click', () => handleLikeCard(idCard, cardElement, userId, !btnLike.classList.contains('elements__like_active')));
-  
+
   dataCard.likes.forEach((owner)=>{
        if (owner._id === userId) {
        liked=true;
@@ -34,7 +34,7 @@ function addCard(dataCard, idCard, likes, liked, userId, handleDeleteCard, handl
         btnLike.classList.add('elements__like_active');
       }
 
-      cardPic.addEventListener('click', () => zoomedPic(dataCard));
+      cardPic.addEventListener('click', () => zoomPic(dataCard));
 
   return cardElement;
 }
@@ -44,7 +44,7 @@ function deleteCard(cardElement) {
   cardElement.remove();
 }
 //лайк карточки
-function ownerLike(dataLikes, userId) {
+function ownLike(dataLikes, userId) {
   let liked = false;
   dataLikes.forEach((owner)=>{
     if (owner._id === userId) {
@@ -59,22 +59,11 @@ function likeCard(dataCard, cardElement, userId) {
   const likesCount = cardElement.querySelector('.elements__like-counter');
 
   likesCount.textContent = dataCard.likes.length.toString();
-  console.log(userId);
-  console.log(dataCard.likes);
-  if (ownerLike(dataCard.likes, userId)) {
+  if (ownLike(dataCard.likes, userId)) {
     btnLike.classList.add('elements__like_active');
-    //console.log('add');
   } else {
     btnLike.classList.remove('elements__like_active');
-    //console.log('remove');
   }
 }
 
 //увеличение карточки
-function zoomedPic(dataCard) {
-  picZoom.src = dataCard.link;
-  picZoom.alt = dataCard.name;
-  titlePicZoom.textContent = dataCard.name;
-
-  openPopup(popupPic);
-}

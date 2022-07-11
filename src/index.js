@@ -2,7 +2,7 @@ export {popups, popupEdit, popupAvatar, popupAdd, popupPic, picZoom,
         titlePicZoom, profName, profAbout, popupProfName,
         popupProfAbout, profAvatar, popupAvatarLink, popupAddName, popupAddLink,
         popupEditBtn, popupAvatarBtn, popupAddBtn, cardTemplate, cardContainer,
-        handleDeleteCard, handleLikeCard, userId};
+        handleDeleteCard, handleLikeCard, userId, zoomPic};
 
 import './pages/index.css';
 import {openPopup, closePopup} from './components/modal.js';
@@ -209,4 +209,13 @@ function closeAdd() {
   popupAddLink.value = '';
   popupAddName.value = '';
   closePopup(popupAdd);
+}
+
+//увеличение карточк
+function zoomPic(dataCard) {
+  picZoom.src = dataCard.link;
+  picZoom.alt = dataCard.name;
+  titlePicZoom.textContent = dataCard.name;
+
+  openPopup(popupPic);
 }
