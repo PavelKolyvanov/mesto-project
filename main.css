@@ -17,7 +17,7 @@
 .elements__info{display:flex;justify-content:space-between}
 .elements__title{font-size:24px;font-weight:900;line-height:29.05px;margin:25px 21px;max-width:197px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .elements__likes{align-items:center;display:flex;flex-direction:column;margin:0;width:42px}
-.elements__like{background:no-repeat 50% url(87ed371465c7a6a1cd01.svg);border:none;cursor:pointer;height:19px;margin:30px 20px 0 0;width:22px}.elements__like:hover{opacity:.5;transition:.3s}.elements__like:active{background-image:url(fe17a515669479b1e649.svg);opacity:1;transition:0s}
+.elements__like{background:no-repeat 50% url(87ed371465c7a6a1cd01.svg);border:none;cursor:pointer;height:19px;margin:30px 20px 0 0;width:22px}.elements__like:hover{opacity:.5;transition:.3s}
 .elements__like_active{background-image:url(fe17a515669479b1e649.svg);opacity:1;transition:0s}
 .elements__like-counter{font-size:13px;font-weight:400;line-height:15.73px;margin:0 21px 22px 0;min-width:10px;text-align:center}
 .elements__trash{background:url(cbc09a894bdd4c956365.svg) 50% no-repeat;border:none;cursor:pointer;height:19px;margin:0;padding:0;position:absolute;right:20px;top:20px;width:18px}.elements__trash:hover{opacity:.6}
